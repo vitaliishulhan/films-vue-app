@@ -2,7 +2,7 @@
   <div>
     <h1>Baza filmów</h1>
     <SearchForm @search-submitted="searchMovies" @search-reset="resetMovies"/>
-    <FilmsTable :movies="getMovies"/>
+    <MoviesTable :movies="getMovies"/>
     <div class="container-fluid">
       <div class="row d-flex justify-content-center" v-if="moviesToShow.length === 0">
         There are nothing to show :(
@@ -18,7 +18,7 @@
 
 <script>
 import SearchForm from './components/SearchForm'
-import FilmsTable from './components/FilmsTable'
+import MoviesTable from './components/MoviesTable'
 import {filter, includes}  from 'lodash'
 
 export default {
@@ -41,7 +41,7 @@ export default {
   },
   components: {
     SearchForm,
-    FilmsTable
+    MoviesTable
   },
   methods: {
     searchMovies(filterObject) {

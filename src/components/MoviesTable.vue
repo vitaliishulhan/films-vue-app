@@ -16,7 +16,7 @@
                         <td scope="row">{{index+1}}</td>
                         <td>{{ movie.title }}</td>
                         <td>{{ movie.year }}</td>
-                        <td>{{ movie.cast.length ? movie.cast.join(',') : 'Unknown' }}</td>
+                        <td>{{ movie.cast.length ? movie.cast.join(', ') : 'Unknown' }}</td>
                         <td>{{ movie.genres.length ? movie.genres.join(', ') : 'Unknowns' }}</td>
                     </tr>
                 </tbody>
@@ -27,7 +27,7 @@
 
 <script>
 export default {
-    name: 'FilmsTable',
+    name: 'MoviesTable',
     props: {
         movies: {
             type: Function,
