@@ -98,6 +98,7 @@ export default {
   },
   beforeMount() {
     const movies100 = orderBy(sampleSize(this.movies,100),['title'],['asc'])
+    
     //genre list
     const genredMovies = {}
 
