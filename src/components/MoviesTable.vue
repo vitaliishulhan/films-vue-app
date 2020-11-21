@@ -37,8 +37,6 @@ export default {
 }
 </script>
 
-<style scoped>
-.d-flex {
-    padding: 20px;
-}
+<style>
+
 </style>
