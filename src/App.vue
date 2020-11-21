@@ -16,7 +16,8 @@
         </div>
       </div>
 
-      <GenreMoviesList :movies="moviesForGenreList"/>
+      <GenreMoviesList :movies="genreMoviesList"/>
+      <CastMoviesList :actorsMoviesList="castMoviesList"/>
     </div>
 </template>
 
@@ -24,7 +25,8 @@
 import SearchForm from './components/SearchForm'
 import MoviesTable from './components/MoviesTable'
 import GenreMoviesList from './components/GenreMoviesList'
-import {filter, includes, sampleSize, orderBy}  from 'lodash'
+import CastMoviesList from './components/CastMoviesList'
+import {filter, includes, sampleSize, orderBy, uniq, partition}  from 'lodash'
 
 export default {
   props: {
@@ -42,13 +44,15 @@ export default {
     return {
       moviesToShow: this.movies.slice(),
       shownMovies: Math.min(10,this.movies.length),
-      moviesForGenreList: null
+      genreMoviesList: null,
+      castMoviesList: null
     }
   },
   components: {
     SearchForm,
     MoviesTable,
-    GenreMoviesList
+    GenreMoviesList,
+    CastMoviesList
   },
   methods: {
     searchMovies(filterObject) {
@@ -93,22 +97,27 @@ export default {
     }
   },
   beforeMount() {
-    const moviesForGenring = orderBy(sampleSize(this.movies,100),['title'],['asc'])
+    const movies100 = orderBy(sampleSize(this.movies,100),['title'],['asc'])
+    //genre list
     const genredMovies = {}
 
     for (let genre of this.genres) {
-      genredMovies[genre] = []
-
-      for (let movie of moviesForGenring) {
-        if(includes(movie.genres,genre)) genredMovies[genre].push(movie.title)
-      }
+      const titles = partition(movies100,movie => includes(movie.genres,genre))[0].map(movie => movie.title)
+      if (titles.length) genredMovies[genre] = titles
     }
 
-    for (let genre in genredMovies) {
-      if (!genredMovies[genre].length) delete genredMovies[genre];
+    this.genreMoviesList = genredMovies
+
+    //cast list
+    const actors = orderBy(uniq(movies100.map(movie => movie.cast).reduce((acc,c) => acc.concat(c))))
+
+    const castedMovies = {}
+
+    for (let actor of actors) {
+      castedMovies[actor] = partition(movies100, movie => includes(movie.cast,actor))[0].map(movie => movie.title)
     }
 
-    this.moviesForGenreList = genredMovies
+    this.castMoviesList = castedMovies
   },
 }
 </script>
@@ -118,6 +127,10 @@ h1 {
   color: #fff;
   padding: 10px 20px;
   background-image: linear-gradient(-90deg, #84cf6a, #16c0b0);
+}
+
+h2 {
+  text-align: center;
 }
 .d-flex {
     padding: 20px;

@@ -1,10 +1,11 @@
 <template>
     <div class="container-fluid">
+        <h2>Genre Movies List</h2>
         <div v-for="(genre, index) of Object.keys(movies)" :key="index">
-            <h3>{{genre}}</h3>
+            <h3>{{ genre }}</h3>
             <ul>
                 <li v-for="(movie, index) of movies[genre]" :key="index">
-                    {{movie}}
+                    {{ movie }}
                 </li>
             </ul>
         </div>
@@ -15,6 +16,7 @@
 
 
 export default {
+    name: 'GenreMoviesList',
     props: {
         movies: {
             type: Object,
