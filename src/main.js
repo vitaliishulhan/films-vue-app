@@ -1,4 +1,9 @@
+// import { createStore } from 'vuex'
 import { createApp } from 'vue'
 import App from './App.vue'
+import movies from './movies_data/movies.json'
+// import genres from './movies_data/genres.json'
 
-createApp(App).mount('#app')
+const app = createApp(App,{movies: movies, /*genres: genres*/})
+
+app.mount('#app')
