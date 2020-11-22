@@ -25,6 +25,7 @@
     </div>
 </template>
 
+
 <script>
 export default {
     name: 'MoviesTable',
@@ -33,7 +34,17 @@ export default {
             type: Function,
             required: true
         }
-    }
+    },
+    data() {
+        return {
+            example: 0
+        }
+    },
+    methods: {
+        inc() {
+            this.example++
+        }
+    },
 }
 </script>
 

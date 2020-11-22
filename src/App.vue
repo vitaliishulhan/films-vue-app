@@ -4,28 +4,29 @@
       <SearchForm @search-submitted="searchMovies" @search-reset="resetMovies"/>
       <MoviesTable :movies="getMovies"/>
 
-      <div class="container-fluid">
-        <div class="row d-flex justify-content-center" v-if="moviesToShow.length === 0">
+      <div class="container-fluid" v-if="moviesToShow.length === 0">
+        <div class="row d-flex justify-content-center">
           There are nothing to show :(
         </div>
       </div>
 
-      <div class="container-fluid">
-        <div class="row d-flex justify-content-center" v-if="shownMovies != moviesToShow.length">
+      <div class="container-fluid" v-if="shownMovies != moviesToShow.length">
+        <div class="row d-flex justify-content-center">
           <button type="button" class="btn btn-info col-sm-10" @click="incrementShowMovies">Pokaż więcej</button>
         </div>
       </div>
 
-      <GenreMoviesList :movies="genreMoviesList"/>
-      <CastMoviesList :actorsMoviesList="castMoviesList"/>
+      <MoviesList title="Genre Movies List" :list="genreMoviesList"/>
+      <MoviesList title="Cast Movies List" :list="castMoviesList"/>
+
     </div>
 </template>
 
 <script>
 import SearchForm from './components/SearchForm'
 import MoviesTable from './components/MoviesTable'
-import GenreMoviesList from './components/GenreMoviesList'
-import CastMoviesList from './components/CastMoviesList'
+import MoviesList from './components/MoviesList'
+
 import {filter, includes, sampleSize, orderBy, uniq, partition}  from 'lodash'
 
 export default {
@@ -51,8 +52,9 @@ export default {
   components: {
     SearchForm,
     MoviesTable,
-    GenreMoviesList,
-    CastMoviesList
+    MoviesList
+    //GenreMoviesList,
+    //CastMoviesList
   },
   methods: {
     searchMovies(filterObject) {
@@ -111,6 +113,8 @@ export default {
 
     //cast list
     const actors = orderBy(uniq(movies100.map(movie => movie.cast).reduce((acc,c) => acc.concat(c))))
+
+    console.table(actors)
 
     const castedMovies = {}
 

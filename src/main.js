@@ -1,4 +1,3 @@
-// import { createStore } from 'vuex'
 import { createApp } from 'vue'
 import App from './App.vue'
 import movies from './movies_data/movies.json'
