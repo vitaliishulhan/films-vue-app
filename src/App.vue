@@ -12,7 +12,7 @@
 
       <div class="container-fluid" v-if="shownMovies != moviesToShow.length">
         <div class="row d-flex justify-content-center">
-          <button type="button" class="btn btn-info col-sm-10" @click="incrementShowMovies">Pokaż więcej</button>
+          <button type="button" class="btn btn-info col-sm-10" @click="incrementShowMovies">{{'Pokaż więcej (' + shownMovies + ' z ' + moviesToShow.length + ')' }}</button>
         </div>
       </div>
 
@@ -75,10 +75,10 @@ export default {
       }
 
       this.moviesToShow = filter(this.movies, o => {
-          let titleTest = includes(o.title,filterObject.title)
+          let titleTest = includes(o.title.toLowerCase(),filterObject.title)
           let fromYearTest = fromYear === '' ? true : o.year >= fromYear
           let toYearTest = toYear === '' ? true : o.year <= toYear
-          let castTest = filterObject.cast === '' ? true : includes(o.cast.join(' '), filterObject.cast.split(' '))
+          let castTest = filterObject.cast === '' ? true : includes(o.cast.join(' ').toLowerCase(), filterObject.cast.toLowerCase().split(' '))
 
           return titleTest && fromYearTest && toYearTest && castTest;
       })

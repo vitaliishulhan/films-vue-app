@@ -46,7 +46,7 @@ export default {
     },
     methods: {
         searchMovies() {
-            this.$emit('search-submitted', {title: this.title, fromYear: this.fromYear, toYear: this.toYear, cast: this.cast})
+            this.$emit('search-submitted', {title: this.title.toLowerCase(), fromYear: this.fromYear, toYear: this.toYear, cast: this.cast})
         },
         resetSearch() {
             this.title = ''
